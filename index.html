@@ -2,7 +2,7 @@
 <head>
 <link rel="StyleSheet" href="style.css" type="text/css" media="all" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Learning to Poke by Poking</title>
+<title>Overcoming Exploration in Reinforcement Learning with Demonstrations</title>
 <style type="text/css">
 #primarycontent h1 {
   font-variant: small-caps;
@@ -80,200 +80,43 @@ iframe {
 </head>
 <body>
 <div id="primarycontent">
-<h1 align="center" itemprop="name"><strong>Learning To Poke by Poking:<br />Experiential Learning of Intuitive Physics</strong></h1>
+<h1 align="center" itemprop="name"><strong>Overcoming Exploration in Reinforcement Learning <br />with Demonstrations</strong></h1>
 
 <center>
 <ul id="people" itemprop="accountablePerson">
-	<li><h4><a href="http://people.eecs.berkeley.edu/~pulkitag">Pulkit Agrawal*</a>, <a href="https://github.com/anair13">Ashvin Nair*</a>, <a href="http://people.eecs.berkeley.edu/~pabbeel">Pieter Abbeel</a>,
-		<a href="http://people.eecs.berkeley.edu/~malik">Jitendra Malik</a>, <a href="http://homes.cs.washington.edu/~svlevine/">Sergey Levine</a></h4></li>
-<li>*Equal Contribution</li>
+	<li><h4>Ashvin Nair, Bob McGrew, Marcin Andrychowicz, Wojciech Zaremba, Pieter Abbeel</h4></li>
 </ul>
 </center>
 
-<img src="img/fig1_cropped.jpg" itemprop="image" width="800" alt="teaserImage">
+<img src="img/s6.jpg" itemprop="image" width="800" alt="teaserImage">
 
 <h3>Abstract</h3>
 
 
-<p>We investigate an experiential learning paradigm for acquiring an internal model of
-intuitive physics. Our model is evaluated on a real-world robotic manipulation task
-that requires displacing objects to target locations by poking. The robot gathered
-over 400 hours of experience by executing more than 50K pokes on different
-objects. We propose a novel approach based on deep neural networks for modeling
-the dynamics of robot’s interactions directly from images, by jointly estimating
-forward and inverse models of dynamics. The inverse model objective provides
-supervision to construct informative visual features, which the forward model can
-then predict and in turn regularize the feature space for the inverse model. The
-interplay between these two objectives creates useful, accurate models that can
-then be used for multi-step decision making. This formulation has the additional
-benefit that it is possible to learn forward models in an abstract feature space and
-thus alleviate the need of predicting pixels. Our experiments show that this joint
-modeling approach outperforms alternative methods. We also demonstrate that
-active data collection using the learned model further improves performance.
+<p>Exploration in environments with sparse rewards has been a persistent problem in reinforcement learning (RL). Many tasks are natural to specify with a sparse reward, and manually shaping a reward function can result in suboptimal performance. However, finding a non-zero reward is exponentially more difficult with increasing task horizon or action dimensionality. This puts many real-world tasks out of practical reach of RL methods. In this work, we use demonstrations to overcome the exploration problem and successfully learn to perform long-horizon, multi-step robotics tasks with continuous control such as stacking blocks with a robot arm. Our method, which builds on top of Deep Deterministic Policy Gradients and Hindsight Experience Replay, provides an order of magnitude of speedup over RL on simulated robotics tasks. It is simple to implement and makes only the additional assumption that we can collect a small set of demonstrations. Furthermore, our method is able to solve tasks not solvable by either RL or behavior cloning alone, and often ends up outperforming the demonstrator policy.
 </p>
 
-<h3>Paper</h3>
+<!-- <h3>Paper</h3>
   <p style="padding-left: 10px; padding-right: 10px;">
     Preprint of the paper is available at: <a href='http://arxiv.org/abs/1606.07419'>[pdf]</a>
-  </p>
+  </p> -->
 
-<h3 style="clear:both">Data</h3>
-  <p style="padding-left: 10px; padding-right: 10px;">
-    Our data is released publicly <a href="https://drive.google.com/file/d/0B3xZefNMOTwuTUwtU0ZnaDhGVUE/view?usp=sharing">here</a>. An explanation of the format and instructions for using it are included as an iPython notebook.
-</p>
-
-<h3>Data Collection</h3>
-<table style="margin: 0 auto">
-  <tr>
-  <p style="padding-left: 10px; padding-right: 10px;">
-   The robot collects the data by randomly poking objects. It is equipped with a Kinect camera, a gripper for poking, and a white rod for resetting the objects to the center of the workspace. The point cloud from the Kinect is used to randomly select one target point for poking. The Kinect point cloud is used only during the training to bias the robot to poke an object instead of poking in free space. The robot pokes objects by moving the finger along the XZ plane at a fixed height from the table. The X and Y axis represent the horizontal and vertical axes, while the Z axis points away from the robot. After selecting a random point to poke ($p$) on the object, the robot randomly samples a poke direction ($\theta$) and length ($l$). Kinematically, the poke is defined by points $p_1, p_2$ that are l/2 distance from $p$ in the directions $\theta$, $(180 + \theta)$ respectively. The robot executes the poke by moving it's finger from $p_1$ to $p_2$.
-  </p>
-
-  <p style="padding-left: 10px; padding-right: 10px;">
-  Some sample clips showing the data collection process can be seen in the following video.
-  </p>
-    <td>
-     <iframe width="640" height="360" src="https://www.youtube.com/embed/4n6fRCvRDlg" frameborder="0" allowfullscreen></iframe>
-    </td>
-  </tr>
-</table>
-<h3>Unexpected Poking Dynamics</h3>
-  <p style="padding-left: 10px; padding-right: 10px;">
-  Modelling the effect of pokes on real world objects is not easy. The complex geometry and material properties of objects often leads to unexpected motion as shown in the following video clip.
-  </p>
+<h3 style="clear:both">Video</h3>
+<p style="padding-left: 10px; padding-right: 10px;">
 <table style="margin: 0 auto">
   <tr>
     <td>
-      <iframe width="640" height="360" src="https://www.youtube.com/embed/Q7tj8i6O-Is" frameborder="0" allowfullscreen></iframe>
+      <iframe width="640" height="360" src="https://www.youtube.com/embed/RXENnTdg1IQ" frameborder="0" allowfullscreen></iframe>
       <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/8SGE1gGi4u8" frameborder="0" allowfullscreen></iframe> -->
     </td>
   </tr>
 </table>
-
-<h3>Our Model: Moving away from predicting pixels</h3>
-  <table style="margin: 0 auto">
-    <tr><td>
-    <img src="img/network.png" itemprop="image" alt="result">
-    </td></tr>
-  </table>
-
-  <p style="padding-left: 10px; padding-right: 10px;">
- We model the dynamics of robot’s interactions directly from images, by jointly estimating
-forward and inverse models of dynamics. The inverse model objective provides
-supervision to construct informative visual features, which the forward model can
-then predict and in turn regularize the feature space for the inverse model. The
-interplay between these two objectives creates useful, accurate models that can
-then be used for multi-step decision making. This formulation has the benefit that it is possible to learn forward models in an abstract feature space and thus alleviate the need of predicting pixels.
-  </p>
-
-<h3>Model Performance</h3>
-<table style="margin: 0 auto">
-  <tr>
-    <td>
-      <p style="padding: 10px;">
-       Our method is shown below, being used to poke objects into a target configuration. The model is trained on only image pairs that contain images one action away from each other. However, it is able to succesfully use the model to move objects farther away.
-      </p>
-      <center>
-      <iframe width="640" height="360" src="https://www.youtube.com/embed/B-6VVWBp7gQ" frameborder="0" allowfullscreen></iframe>
-      </center>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <p style="padding: 10px;">
-       The model is able to succesfully act on objects not included in its training set.
-      </p>
-      <center>
-      <iframe width="640" height="360" src="https://www.youtube.com/embed/zUReXbuR_Q0" frameborder="0" allowfullscreen></iframe>
-      </center>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <p style="padding: 10px;">
-       The actions we execute are essentially greedy and there is no long term planning. Therefore, when presented with the situation below, the model does not try to move around the obstructing object.
-      </p>
-      <center>
-      <iframe width="640" height="360" src="https://www.youtube.com/embed/_LiFAZo6bZI" frameborder="0" allowfullscreen></iframe>
-      </center>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <p style="padding: 10px;">
-       Every training pair the model sees is the result of one action, so multiple objects in different parts of the scene cannot move together. When faced with multiple objects to move to reach the target, the model sometimes succeeds but often gets stuck.
-      </p>
-      <center>
-      <iframe width="640" height="360" src="https://www.youtube.com/embed/5j5ZT_tqsJg" frameborder="0" allowfullscreen></iframe>
-      </center>
-    </td>
-  </tr>
-</table>
-
-<h3>Supplemental Materials</h3>
-  <p style="padding-left: 10px; padding-right: 10px;">
-   The robot is tasked with displacing the object from initial to target configuration. Using the multistep decision making proposed in the paper, the final result of the pokes
-   is shown as the final state in the image below.
-  </p>
-<img src="img/sequence-no-arrow.png" itemprop="image" alt="result">
-
-  <p style="padding-left: 10px; padding-right: 10px;">
-   Additional supplemental materials detailing the simulation experiments will be released soon.
-  </p>
-
-<h3 style="clear:both">Code and Models</h3>
-<p style="padding-left: 10px; padding-right: 10px;">
-To be released soon.
 </p>
 
-<h3 style="clear:both">Presentation</h3>
 <p style="padding-left: 10px; padding-right: 10px;">
-This work was an oral presentation at NIPS 2016. <a href="https://channel9.msdn.com/Events/Neural-Information-Processing-Systems-Conference/Neural-Information-Processing-Systems-Conference-NIPS-2016/Learning-to-Poke-by-Poking-Experiential-Learning-of-Intuitive-Physics
-">This link</a> contains a recording of the presentation.
+For comments or questions, contact Ashvin Nair. The template for this website has been adopted from Carl Doersch.
 </p>
 
-<h3 style="clear:both">Big Data in Robotics</h3>
-<p style="padding-left: 10px; padding-right: 10px;">
-It's only very recently, that there is a growing interest in robotic learning from large amounts of interaction data. While the goal of our work is to learn intuitive models of physics for control, it's worth mentioning the following prior and contemporary works that have addressed other interesting learning problems from large scale robotic interaction data:
-<ul>
-	<li> Pinto, L., & Gupta, A., Supersizing self-supervision: Learning to grasp from 50k tries and 700 robot hours, ICRA, 2016.<br><br>
-	<li> Levine, S., Pastor, P., Krizhevsky, A., & Quillen, D., Learning Hand-Eye Coordination for Robotic Grasping with Deep Learning and Large-Scale Data Collection, arXiv:1603.02199, 2016. <br><br>
-	<li> Pinto, L., Gandhi, D., Han, Y., Park, Y. L., & Gupta, A., The Curious Robot: Learning Visual Representations via Physical Interactions, arXiv:1604.01360, 2016.
-</ul>
-</p>
-
-
-<!-- <h3 style="clear:both">Additional Materials</h3>
--->
-
-<!--
-<h3 style="clear:both">Related Papers</h3>
-<table>
-<tr><td style="border-bottom:solid 1px #ccc">
-<p style="padding-left: 10px; padding-right: 10px; margin-top:10px;"><b>Other works on &ldquo;Self-Supervised&rdquo; Learning</b></p></td></tr>
-<tr><td>
-<p style="padding-left: 10px; padding-right: 10px;">P. Agrawal, J. Carreira and J. Malik <a href="http://www.cs.berkeley.edu/~pulkitag/lsm/lsm.html">Learning to See by Moving</a> ICCV 2015<p>
-</td></tr></table>
--->
-
-
-<h3 style="clear:both">Acknowlegements</h3>
-<p style="padding-left: 10px; padding-right: 10px;">
-First and foremost, we thank <a href='http://people.eecs.berkeley.edu/~efros/'>Alyosha Efros</a> for inspiration and fruitful discussions throughout this work. The title of this paper has been partly influenced by the term ``pokebot" that Alyosha has been using for several years. We would like to thank Ruzena Bajcsy for access to the Baxter robot and Shubham Tulsiani for helpful comments. This work was supported in part by ONR MURI N00014-14-1-0671 and ONR YIP. Sergey Levine was partially supported by ARL, through the MAST program.  We gratefully acknowledge NVIDIA  corporation for the donation of
-K40 GPUs and access to the NVIDIA PSG cluster for this research.
-<br><br>
-
-<h3 style="clear:both">Website Template</h3>
-<p style="padding-left: 10px; padding-right: 10px;">
-The template for this website has been adopted from Carl Doersch.
-</p>
-
-<h3 style="clear:both">Contact</h3>
-<p style="padding-left: 10px; padding-right: 10px;">
-For comments/questions, contact <a href="http://www.cs.berkeley.edu/~pulkitag"  target="_blank">Pulkit Agrawal</a></p>
 </div>
 
 </body>
